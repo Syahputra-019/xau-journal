@@ -52,6 +52,33 @@ const isEditing = ref(false);
 const editingTradeId = ref(null);
 const showSettingsModal = ref(false);
 
+// PWA Install state
+const deferredPrompt = ref(null);
+const showInstallBanner = ref(false);
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt.value = e;
+        showInstallBanner.value = true;
+    });
+    window.addEventListener('appinstalled', () => {
+        showInstallBanner.value = false;
+        deferredPrompt.value = null;
+    });
+}
+
+const installPWA = async () => {
+    if (deferredPrompt.value) {
+        deferredPrompt.value.prompt();
+        const { outcome } = await deferredPrompt.value.userChoice;
+        if (outcome === 'accepted') {
+            showInstallBanner.value = false;
+        }
+        deferredPrompt.value = null;
+    }
+};
+
 // Account Cent vs USD mode helper
 const isCentMode = computed(() => props.stats.account_type === 'CENT');
 const currencyUnit = computed(() => isCentMode.value ? 'USC' : 'USD');
@@ -250,6 +277,36 @@ const clearPeriodFilter = () => {
 
     <AuthenticatedLayout>
         <div class="space-y-4 sm:space-y-6 pb-20 sm:pb-8">
+            <!-- PWA In-App Install Prompt Banner -->
+            <div
+                v-if="showInstallBanner"
+                class="bg-gradient-to-r from-cyan-950/90 via-slate-900 to-slate-900 border border-cyan-500/50 p-3 rounded-sm flex items-center justify-between gap-3 shadow-xl transition"
+            >
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-sm bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-base shrink-0">
+                        📲
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-slate-100">Pasang Aplikasi XAU Journal di HP</div>
+                        <div class="text-[11px] text-slate-400">Akses instan dari Home Screen tanpa browser bar.</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button
+                        @click="installPWA"
+                        class="px-3.5 py-1.5 bg-gradient-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 font-bold text-xs rounded-sm shadow-sm transition active:scale-95"
+                    >
+                        Install
+                    </button>
+                    <button
+                        @click="showInstallBanner = false"
+                        class="p-1 text-slate-400 hover:text-slate-200 text-xs"
+                    >
+                        ✕
+                    </button>
+                </div>
+            </div>
+
             <!-- Top Header & Action -->
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">

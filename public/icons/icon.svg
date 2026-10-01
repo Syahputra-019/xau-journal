@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="goldCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background with rounded-sm aesthetic -->
+  <rect width="512" height="512" rx="64" fill="url(#bg)" stroke="#1e293b" stroke-width="8"/>
+  <circle cx="256" cy="256" r="180" fill="url(#glow)"/>
+  
+  <!-- Candlesticks / Chart Element in Background -->
+  <line x1="160" y1="200" x2="160" y2="340" stroke="#0e7490" stroke-width="6" stroke-linecap="round"/>
+  <rect x="148" y="230" width="24" height="70" rx="4" fill="#0891b2"/>
+  
+  <line x1="352" y1="160" x2="352" y2="320" stroke="#0e7490" stroke-width="6" stroke-linecap="round"/>
+  <rect x="340" y="190" width="24" height="80" rx="4" fill="#06b6d4"/>
+
+  <!-- Glowing Modern X Monogram -->
+  <path d="M170 140 L256 256 L342 140 H385 L285 276 L392 410 H345 L256 296 L167 410 H120 L227 276 L127 140 Z" fill="url(#goldCyan)" />
+  
+  <!-- Upward Trend Arrow -->
+  <path d="M220 360 L290 290 L340 330 L400 250" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="370,250 400,250 400,280" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
